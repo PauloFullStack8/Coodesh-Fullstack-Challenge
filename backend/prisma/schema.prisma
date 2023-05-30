@@ -1,0 +1,135 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Name {
+  id    Int    @id @default(autoincrement())
+  title String
+  first String
+  last  String
+
+  user User?
+}
+
+model Street {
+  id     Int    @id @default(autoincrement())
+  number Int
+  name   String
+
+  user       User?     @relation(fields: [userId_ref], references: [id_ref])
+  userId_ref Int?
+  Location   Location?
+}
+
+model Coordinates {
+  id        Int    @id @default(autoincrement())
+  latitude  String
+  longitude String
+
+  user       User?     @relation(fields: [userId_ref], references: [id_ref])
+  userId_ref Int?
+  Location   Location?
+}
+
+model Timezone {
+  id          Int    @id @default(autoincrement())
+  offset      String
+  description String
+
+  user       User?     @relation(fields: [userId_ref], references: [id_ref])
+  userId_ref Int?
+  Location   Location?
+}
+
+model Location {
+  id            Int         @id @default(autoincrement())
+  city          String
+  state         String
+  country       String
+  postcode      Int
+  timezone      Timezone    @relation(fields: [timezoneId], references: [id])
+  timezoneId    Int         @unique
+  street        Street      @relation(fields: [streetId], references: [id])
+  streetId      Int         @unique
+  coordinates   Coordinates @relation(fields: [coordinatesId], references: [id])
+  coordinatesId Int         @unique
+
+  user User?
+}
+
+model Login {
+  id       Int    @id @default(autoincrement())
+  uuid     String
+  username String
+  password String
+  salt     String
+  md5      String
+  sha1     String
+  sha256   String
+
+  user User?
+}
+
+model Dob {
+  id   Int    @id @default(autoincrement())
+  date String
+  age  Int
+
+  user User?
+}
+
+model Registered {
+  id   Int    @id @default(autoincrement())
+  date String
+  age  Int
+
+  user User?
+}
+
+model Id {
+  id    Int    @id @default(autoincrement())
+  name  String
+  value String
+
+  user User?
+}
+
+model Picture {
+  id        Int    @id @default(autoincrement())
+  large     String
+  medium    String
+  thumbnail String
+
+  user User?
+}
+
+model User {
+  id_ref       Int           @id @default(autoincrement())
+  gender       String
+  email        String
+  phone        String
+  cell         String
+  nat          String
+  name         Name          @relation(fields: [nameId], references: [id])
+  nameId       Int           @unique
+  location     Location      @relation(fields: [locationId], references: [id])
+  locationId   Int           @unique
+  login        Login         @relation(fields: [loginId], references: [id])
+  loginId      Int           @unique
+  dob          Dob           @relation(fields: [dobId], references: [id])
+  dobId        Int           @unique
+  registered   Registered    @relation(fields: [registeredId], references: [id])
+  registeredId Int           @unique
+  id           Id            @relation(fields: [idId], references: [id])
+  idId         Int           @unique
+  picture      Picture       @relation(fields: [pictureId], references: [id])
+  pictureId    Int           @unique
+  Street       Street[]
+  Coordinates  Coordinates[]
+  Timezone     Timezone[]
+}
