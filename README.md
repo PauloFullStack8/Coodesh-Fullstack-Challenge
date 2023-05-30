@@ -46,7 +46,7 @@ Optei por seguir um padrão modular para organizar o código da aplicação. Div
 
 ### Organização de Código
 
-Adotei uma estrutura de projeto modularizada para facilitar a manutenção e extensibilidade. Dividimos o código em módulos independentes, cada um com sua própria responsabilidade seguido alguns princípios de arquitetura com SOLID.
+Adotei uma estrutura de projeto modularizada para facilitar a manutenção e extensibilidade. Dividi o código em módulos independentes, cada um com sua própria responsabilidade seguido alguns princípios de arquitetura com SOLID.
 
 ### Banco de Dados
 
